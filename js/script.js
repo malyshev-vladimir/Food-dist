@@ -127,7 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const modalTimerId = setTimeout(openModal, 6000);
+    // const modalTimerId = setTimeout(openModal, 6000);
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -137,4 +137,50 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', showModalByScroll);
+
+    // Используем карточки для карточек товаров
+
+    class menu {
+        constructor(src, alt, name, description, prise, parentSelector) {
+            this.src = src;
+            this.alt = alt;
+            this.name = name;
+            this.description = description;
+            this.prise = prise;
+            this.parent = querySelector(parentSelector);
+            this.transfer = 27;
+            this.changeToUAH();
+        }
+
+        changeToUAH() {
+            this.prise = this.prise * this.transfer
+        }
+
+        render() {
+            const element = documnet.createElement('div');
+            element.innerHTML = `
+                <div class="menu__item">
+                    <img src="img/tabs/post.jpg" alt="post">
+                    <h3 class="menu__item-subtitle">Меню "Постное"</h3>
+                    <div class="menu__item-descr">Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков. </div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>430</span> грн/день</div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+    const firstMenu = new menu("Фитнес", "...", 229),
+          secondMenu = new menu("Фитнес", "...", 229),
+          thirdMenu = new menu("Фитнес", "...", 229);
+
+    const menuContainers = document.querySelectorAll('.menu__item');
+    
+
+    menuContainers.forEach(contain, () => {
+        contain.
+    });
 });

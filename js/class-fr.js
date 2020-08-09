@@ -28,7 +28,7 @@ const dic = new ColoredRectatangleWithText(25, 10, 'Hello World', 'red');
 dic.showMyProps();
 
 const square = new Rectangle(10, 10);
-const long = new Rectangle(20,100);
+const long = new Rectangle(20, 100);
 
 console.log(square.calcArea());
 console.log(long.calcArea());
