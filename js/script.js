@@ -198,4 +198,24 @@ window.addEventListener('DOMContentLoaded', () => {
         'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 
         430, 
         '.menu . container').render();
+    
+    const log = function(a,b,...rest) {
+        console.log(a, b, rest);
+    };
+
+    log('basic', 'rest', 'operator', 'usage');
+    
+    function calcOrDouble(number, basis) {
+        basis = basis || 2;
+        console.log(number * basis);
+    }
+
+    calcOrDoubleR(3, 5);
+
+    function calcOrDoubleR(number, basis = 2) {
+        console.log(number * basis);
+    }
+
+    calcOrDoubleR(3);
+
 });
