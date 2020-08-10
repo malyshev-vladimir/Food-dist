@@ -142,12 +142,13 @@ window.addEventListener('DOMContentLoaded', () => {
     // Используем карточки для карточек товаров
 
     class MenuCard {
-        constructor(src, alt, name, description, prise, parentSelector) {
+        constructor(src, alt, name, description, prise, parentSelector, ...classes) {
             this.src = src;
             this.alt = alt;
             this.name = name;
             this.description = description;
             this.prise = prise;
+            this.classes = classes;
             this.parent = querySelector(parentSelector);
             this.transfer = 2.7;
             this.changeToUAH();
@@ -159,16 +160,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
         render() {
             const element = document.createElement('div');
+            this.classes.forEach(className => element.classList.add(className));
             element.innerHTML = `
-                <div class="menu__item">
-                    <img src=${this.src} alt=${this.alt}>
-                    <h3 class="menu__item-subtitle">Меню "${this.name}"</h3>
-                    <div class="menu__item-descr">${this.description}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.prise}</span> грн/день</div>
-                    </div>
+                <img src=${this.src} alt=${this.alt}>
+                <h3 class="menu__item-subtitle">Меню "${this.name}"</h3>
+                <div class="menu__item-descr">${this.description}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.prise}</span> грн/день</div>
                 </div>
             `;
             this.parent.append(element);
@@ -181,7 +181,9 @@ window.addEventListener('DOMContentLoaded', () => {
         'Фитнес', 
         'Меню "Фитнес" - это новый подход к   приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
         229, 
-        '.menu . container'
+        '.menu . container',
+        'menu__item',
+        'big'
         ).render();
 
     new MenuCard(
@@ -190,14 +192,18 @@ window.addEventListener('DOMContentLoaded', () => {
         'Премиум', 
         'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
         510, 
-        '.menu . container').render();
+        '.menu . container',
+        'menu__item'
+        ).render();
 
     new MenuCard(
         "img/tabs/post.jpg", "post", 
         'Постное', 
         'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.', 
         430, 
-        '.menu . container').render();
+        '.menu . container',
+        'menu__item'
+        ).render();
     
     const log = function(a,b,...rest) {
         console.log(a, b, rest);
