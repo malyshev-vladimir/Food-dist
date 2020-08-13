@@ -204,6 +204,9 @@ window.addEventListener('DOMContentLoaded', () => {
         'menu__item'
         ).render();
     
+
+    // Заготовки под новые функции
+
     const log = function(a,b,...rest) {
         console.log(a, b, rest);
     };
@@ -223,11 +226,49 @@ window.addEventListener('DOMContentLoaded', () => {
 
     calcOrDoubleR(3);
 
+    // Forms
+
+    const forms = document.querySelectorAll('form');
+
     const message = {
         loadings: 'Загрузка', 
         success: 'Спасибо! Скоро мы с вами свяжемся',
         failure: 'Что-то пошло не так ...'
+    };
+
+    forms.forEach(item => {
+        postData(item);
+    });
+
+    function postData(form) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loadings;
+            form.append(statusMessage)
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+
+            request.setRequestHeader('Content-type', 'multipart/form-data');
+            const formData = new FormData(form);
+
+            request.send(formData);
+
+            request.addEventListener('load', () => {
+                if (request.status == 200) {
+                    console.log(request.response);
+                    statusMessage.textContent = message.success;
+                } else {
+                    statusMessage.textContent = message.failure;
+                }
+            });
+        });
     }
+
+    // ThanksModal
 
     function showThanksModal(message) {
         const prevModalDialog = document.querySelector('.modal__dialog');
