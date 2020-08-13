@@ -92,8 +92,7 @@ window.addEventListener('DOMContentLoaded', () => {
     //Modal
 
     const modalTrigger = document.querySelectorAll('[data-modal]'),
-        modal = document.querySelector('.modal'),
-        modalCloseBtn = document.querySelector('[data-close]');
+        modal = document.querySelector('.modal');
 
     function openModal() {
         // modal.classList.add('show');
@@ -117,7 +116,7 @@ window.addEventListener('DOMContentLoaded', () => {
     modalCloseBtn.addEventListener('click', closeModal);
 
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        if (e.target === modal || e.target.getAttribute('data-close') == '') {
             closeModal();
         }
     });
@@ -216,12 +215,42 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log(number * basis);
     }
 
-    calcOrDoubleR(3, 5);
+    calcOrDouble(3, 5);
 
     function calcOrDoubleR(number, basis = 2) {
         console.log(number * basis);
     }
 
     calcOrDoubleR(3);
+
+    const message = {
+        loadings: 'Загрузка', 
+        success: 'Спасибо! Скоро мы с вами свяжемся',
+        failure: 'Что-то пошло не так ...'
+    }
+
+    function showThanksModal(message) {
+        const prevModalDialog = document.querySelector('.modal__dialog');
+
+        prevModalDialog.classList.add('hide');
+        openModal();
+
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('.modal__dialog');
+        thanksModal.innerHTML = `
+            <div class="modal_content">
+                <div class="modal__close" data-close>x</div>
+                <div class="modal__title">${message}</div>
+            </div>
+        `;
+
+        document.querySelector('.modal').append(thanksModal);
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal();
+        }, 4000);
+    }
 
 });
