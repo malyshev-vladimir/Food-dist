@@ -149,7 +149,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.description = description;
             this.prise = prise;
             this.classes = classes;
-            this.parent = querySelector(parentSelector);
+            // this.parent = querySelector(parentSelector);
             this.transfer = 2.7;
             this.changeToUAH();
         }
@@ -171,7 +171,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     <div class="menu__item-total"><span>${this.prise}</span> грн/день</div>
                 </div>
             `;
-            this.parent.append(element);
+            // this.parent.append(element);
         }
     }
 
@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', () => {
         '.menu . container',
         'menu__item',
         'big'
-        ).render();
+    ).render();
 
     new MenuCard(
         "img/tabs/elite.jpg", 
@@ -204,24 +204,97 @@ window.addEventListener('DOMContentLoaded', () => {
         '.menu . container',
         'menu__item'
         ).render();
-    
-    const log = function(a,b,...rest) {
-        console.log(a, b, rest);
+
+    // Forms
+
+    const forms = document.querySelectorAll('form');
+
+    const massage = {
+        loading: 'Загрузка',
+        success: 'Спасибо! Мыскоро с вами свяжемся',
+        failure: 'Что-то пошло не так'
     };
 
-    log('basic', 'rest', 'operator', 'usage');
-    
-    function calcOrDouble(number, basis) {
-        basis = basis || 2;
-        console.log(number * basis);
+    forms.forEach(item => {
+        postData(item);
+    });
+
+    function postData(form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const statusMessage = document.createElement('div');
+            statusMessage.classList.add('status');
+            statusMessage.textContent = message.loading;
+            form.append(statusMessage);
+
+            const request = new XMLHttpRequest();
+            request.open('POST', 'server.php');
+
+            request.setRequestHeader('Content-type', 'multipart/form-data');
+            const formData = new FormData(form);
+
+            request.send(formData);
+
+            request.addEventListener('load', () => {
+                if (request.status === 200) {
+                    console.log(request.response);
+                    statusMessage.textContent = message.success;
+                } else {
+                    statusMessage.textContent = message.failure;
+                }
+            });
+
+
+        });
     }
 
-    calcOrDoubleR(3, 5);
+    // Slider
 
-    function calcOrDoubleR(number, basis = 2) {
-        console.log(number * basis);
+    const slides = document.querySelectorAll('.offer__slide'),
+          prev = document.querySelector('.offer__slider-prev'),
+          next = document.querySelector('.offer__slider-next'),
+          total = document.querySelector('#total'),
+          current = document.querySelector('#current');
+    let slideIndex = 1;
+          
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    }  else {
+        total.textContent = slides.length;
     }
 
-    calcOrDoubleR(3);
+    function showSlides(n) {
+        if(n > slides.length) {
+            slideIndex = 1;
+        }
 
+        if(n < 1) {
+            slideIndex = slides.length;
+        }
+
+        slides.forEach(slide => slide.style = 'none');
+
+        slides[slideIndex-1] = slide.style = 'block';
+
+        if (slides.length < 10) {
+            current.textContent = `0${slidesIndex}`;
+        }  else {
+            current.textContent = slidesIndex;
+        }
+    }
+
+   function plusSlides(n) {
+       showSlides(slideIndex += n);
+   }
+
+   prev.addEventListener('click', () => {
+       plusSlides(-1);
+   });
+
+   next.addEventListener('click', () => {
+        plusSlides(1);
+   });
 });
