@@ -203,24 +203,12 @@ window.addEventListener('DOMContentLoaded', () => {
         '.menu . container',
         'menu__item'
         ).render();
-<<<<<<< HEAD
-
-    // Forms
-
-    const forms = document.querySelectorAll('form');
-
-    const massage = {
-        loading: 'Загрузка',
-        success: 'Спасибо! Мыскоро с вами свяжемся',
-        failure: 'Что-то пошло не так'
-=======
     
 
     // Заготовки под новые функции
 
     const log = function(a,b,...rest) {
         console.log(a, b, rest);
->>>>>>> b2c74ee5df908aa7a2e67493fd379f4f497eda16
     };
 
     forms.forEach(item => {
@@ -302,78 +290,7 @@ window.addEventListener('DOMContentLoaded', () => {
        plusSlides(-1);
    });
 
-<<<<<<< HEAD
    next.addEventListener('click', () => {
         plusSlides(1);
    });
-=======
-    // Forms
-
-    const forms = document.querySelectorAll('form');
-
-    const message = {
-        loadings: 'Загрузка', 
-        success: 'Спасибо! Скоро мы с вами свяжемся',
-        failure: 'Что-то пошло не так ...'
-    };
-
-    forms.forEach(item => {
-        postData(item);
-    });
-
-    function postData(form) {
-        form.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            const statusMessage = document.createElement('div');
-            statusMessage.classList.add('status');
-            statusMessage.textContent = message.loadings;
-            form.append(statusMessage)
-
-            const request = new XMLHttpRequest();
-            request.open('POST', 'server.php');
-
-            request.setRequestHeader('Content-type', 'multipart/form-data');
-            const formData = new FormData(form);
-
-            request.send(formData);
-
-            request.addEventListener('load', () => {
-                if (request.status == 200) {
-                    console.log(request.response);
-                    statusMessage.textContent = message.success;
-                } else {
-                    statusMessage.textContent = message.failure;
-                }
-            });
-        });
-    }
-
-    // ThanksModal
-
-    function showThanksModal(message) {
-        const prevModalDialog = document.querySelector('.modal__dialog');
-
-        prevModalDialog.classList.add('hide');
-        openModal();
-
-        const thanksModal = document.createElement('div');
-        thanksModal.classList.add('.modal__dialog');
-        thanksModal.innerHTML = `
-            <div class="modal_content">
-                <div class="modal__close" data-close>x</div>
-                <div class="modal__title">${message}</div>
-            </div>
-        `;
-
-        document.querySelector('.modal').append(thanksModal);
-        setTimeout(() => {
-            thanksModal.remove();
-            prevModalDialog.classList.add('show');
-            prevModalDialog.classList.remove('hide');
-            closeModal();
-        }, 4000);
-    }
-
->>>>>>> b2c74ee5df908aa7a2e67493fd379f4f497eda16
 });
